@@ -46,6 +46,13 @@ const errorElement = document.getElementById('error') as HTMLElement
 const bpmElement = document.getElementById('bpm') as HTMLElement
 const arElement = document.getElementById('ar') as HTMLElement
 const comboLabelElement = document.getElementById('combo-label') as HTMLElement
+const resultDetailsElement = document.getElementById('result-details')!
+const resultDetailsContainerElement = document.getElementById(
+  'result-details-container'
+)!
+const resultDetailsToggleElement = document.getElementById(
+  'result-details-toggle'
+)!
 
 const setResultText = createTextSetter(resultElement, 'result')
 
@@ -102,6 +109,15 @@ const getColorForDifficulty = (sr: number): string => {
   if (sr < 5.3) return '#FF66AA' // 4.0 - 5.29
   if (sr < 6.5) return '#8866EE' // 5.3 - 6.49
   return '#000000' // 6.5+
+}
+
+const setDetails = (...details: Array<string>) => {
+  resultDetailsElement.innerHTML = ''
+  details.forEach((s) => {
+    const pElement = document.createElement('p')
+    pElement.textContent = s
+    resultDetailsElement.appendChild(pElement)
+  })
 }
 
 const getMaxCombo = () => {
@@ -245,6 +261,11 @@ const calculate = (first: boolean = false) => {
         )
         pp = stdResult.pp
         stars = stdResult.stars
+        setDetails(
+          `${Mth.round(pp.aim)} aim`,
+          `${Mth.round(pp.speed)} speed`,
+          `${Mth.round(pp.acc)} accuracy`
+        )
         arElement.innerText =
           cleanBeatmap.ar === undefined
             ? '?'
@@ -278,6 +299,10 @@ const calculate = (first: boolean = false) => {
           combo,
           misses,
           accuracy
+        )
+        setDetails(
+          `${Mth.round(pp.accuracy)} accuracy`,
+          `${Mth.round(pp.strain)} strain`
         )
         break
 
@@ -581,6 +606,18 @@ const initializeExtension = async ({
     accuracyResetButton.addEventListener('click', () => {
       accuracyElement.value = 100.0
       calculate()
+    })
+
+    resultDetailsToggleElement.addEventListener('click', () => {
+      resultDetailsToggleElement.classList.toggle('active')
+      if (resultDetailsElement.classList.toggle('active')) {
+        resultDetailsContainerElement.style.setProperty(
+          'height',
+          `${resultDetailsElement.scrollHeight}px`
+        )
+      } else {
+        resultDetailsContainerElement.style.setProperty('height', '0px')
+      }
     })
 
     // Set the combo to the max combo by default
