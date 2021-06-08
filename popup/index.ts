@@ -1,7 +1,7 @@
 import ojsama from 'ojsama'
 
 import manifest from '../static/manifest.json'
-import { setLanguage, createTextSetter } from './translations'
+import { setLanguage, createTextSetter, resetTranslation } from './translations'
 import { loadSettings, onSettingsChange } from './settings'
 import { matchRegex, pageType } from '../common/constants'
 import { loadAnalytics } from './analytics'
@@ -45,6 +45,7 @@ const resultElement = document.getElementById('result') as HTMLElement
 const errorElement = document.getElementById('error') as HTMLElement
 const bpmElement = document.getElementById('bpm') as HTMLElement
 const arElement = document.getElementById('ar') as HTMLElement
+const comboLabelElement = document.getElementById('combo-label') as HTMLElement
 
 const setResultText = createTextSetter(resultElement, 'result')
 
@@ -52,7 +53,10 @@ versionElement.innerText = `ezpp! v${manifest.version}`
 
 // Set after the extension initializes, used for additional error information.
 let currentUrl: string
-let cleanBeatmap: ojsama.beatmap
+let cleanBeatmap: ojsama.beatmap & {
+  mode: number
+}
+
 let parsedTaikoResult: ParsedTaikoResult
 let timingPoints: Array<TimingPoint>
 let pageInfo: PageInfo
@@ -204,7 +208,7 @@ const trackCalculate = (() => {
 
 const trackCalculateDebounced = debounce(trackCalculate, 500)
 
-const calculate = () => {
+const calculate = (first: boolean = false) => {
   try {
     const { modifiers, accuracy, combo, misses } = getCalculationSettings()
 
@@ -217,8 +221,11 @@ const calculate = () => {
     let stars = { total: 0 }
     let pp
 
-    switch (cleanBeatmap.mode) {
+    cleanBeatmap.objects.sort((a, b) => a.time - b.time) // TODO: remove this after ojsama#27 is merged
+    switch (cleanBeatmap.mode as number) {
       case MODE_STANDARD:
+        comboLabelElement.setAttribute('data-t', 'combo')
+        resetTranslation(comboLabelElement)
         document.documentElement.classList.add('mode-standard')
         const stdResult = std.calculatePerformance(
           cleanBeatmap,
@@ -240,6 +247,8 @@ const calculate = () => {
         break
 
       case MODE_TAIKO:
+        comboLabelElement.setAttribute('data-t', 'total-hits')
+        resetTranslation(comboLabelElement)
         document.documentElement.classList.add('mode-taiko')
         const attr = taiko.calculate(
           cleanBeatmap,
@@ -249,7 +258,9 @@ const calculate = () => {
         )
         Console.log('osu!taiko star rating calculation result:', attr)
         pageInfo.beatmap.max_combo = attr.maxCombo
-        resetCombo() // we changed max combo above, so we need to apply changes here.
+        if (first) {
+          resetCombo() // we changed max combo above, so we need to apply changes here.
+        }
         stars = { total: attr.starRating }
         pp = taiko.calculatePerformance(
           cleanBeatmap,
@@ -428,7 +439,10 @@ const attemptToFetchBeatmap = (id: number, attempts: number): Promise<string> =>
 
 const processBeatmap = (rawBeatmap: string) => {
   const { map } = new ojsama.parser().feed(rawBeatmap)
-  parsedTaikoResult = taikoReader.feed(rawBeatmap, map.mode !== MODE_TAIKO)
+  parsedTaikoResult = taikoReader.feed(
+    rawBeatmap,
+    (map.mode as number) !== MODE_TAIKO
+  )
   timingPoints = timingsReader.feed(rawBeatmap)
 
   cleanBeatmap = map
@@ -525,9 +539,24 @@ const initializeExtension = async ({
       }
     })
 
-    accuracyElement.addEventListener('input', calculate)
-    comboElement.addEventListener('input', calculate)
-    missesElement.addEventListener('input', calculate)
+    accuracyElement.addEventListener('input', () => calculate())
+    comboElement.addEventListener('input', () => calculate())
+    missesElement.addEventListener('input', () => {
+      if ((cleanBeatmap.mode as number) === MODE_TAIKO) {
+        // in taiko, the combo element transforms into 'total hits' and filling it by hand is such a pain, so let's auto fill it.
+        // this cannot be applied for std, because std is just a max combo rather than total hits.
+        // total hits = (300s + 100s + 50s), or (max combo - misses)
+        const totalHits =
+          pageInfo.beatmap.max_combo! -
+          Mth.clamp(
+            parseInt(missesElement.value) || 0,
+            0,
+            pageInfo.beatmap.max_combo!
+          )
+        comboElement.value = totalHits.toString()
+      }
+      calculate()
+    })
 
     fcResetButton.addEventListener('click', () => {
       resetCombo()
@@ -558,7 +587,7 @@ const initializeExtension = async ({
       })
     }
 
-    calculate()
+    calculate(true)
   } catch (err) {
     displayError(err)
   }
