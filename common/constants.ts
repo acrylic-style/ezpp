@@ -2,7 +2,8 @@ export const BEATMAP_URL_REGEX = /^https?:\/\/(osu|new).ppy.sh\/([bs]|beatmapset
 export const SCORE_URL_REGEX = /^https?:\/\/(osu|new).ppy.sh\/scores\/(osu|taiko|fruits|mania)\/(\d+)/i
 
 export const testRegex = (url: string) =>
-  url.match(BEATMAP_URL_REGEX) || url.match(SCORE_URL_REGEX)
+  !url.includes('/discussion') &&
+  (url.match(BEATMAP_URL_REGEX) || url.match(SCORE_URL_REGEX))
 
 export const matchRegex = (
   url: string
