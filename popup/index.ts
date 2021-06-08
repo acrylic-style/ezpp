@@ -93,7 +93,7 @@ const MODE_MANIA = 3
 const setSongDetails = (metadataInOriginalLanguage: boolean) => {
   if (!cleanBeatmap) return
 
-  const { artist, artist_unicode, title, title_unicode } = cleanBeatmap
+  const { artist, artist_unicode, title, title_unicode } = pageInfo.beatmapInfo
   titleElement.innerText = metadataInOriginalLanguage
     ? title_unicode || title
     : title
@@ -373,6 +373,7 @@ const getPageInfo = (url: string, tabId: number): Promise<PageInfo> =>
       beatmap: {},
       mode: '',
       convert: {},
+      beatmapInfo: null,
     }
 
     const result = matchRegex(url)!
@@ -440,6 +441,7 @@ const getPageInfo = (url: string, tabId: number): Promise<PageInfo> =>
             return
           }
 
+          info.beatmapInfo = response.beatmapSet // as BeatmapSet
           info.beatmap = response.beatmap
           info.convert = response.convert
           // @ts-ignore
@@ -486,6 +488,7 @@ const processBeatmap = (rawBeatmap: string) => {
 
   cleanBeatmap = map
 
+  if (!pageInfo.beatmapInfo) pageInfo.beatmapInfo = cleanBeatmap
   // Support old beatmaps
   cleanBeatmap.mode = Number(cleanBeatmap.mode || MODE_STANDARD)
   if (pageInfo.mode === 'taiko') cleanBeatmap.mode = MODE_TAIKO
