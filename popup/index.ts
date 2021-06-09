@@ -4,7 +4,6 @@ import manifest from '../static/manifest.json'
 import { setLanguage, createTextSetter, resetTranslation } from './translations'
 import { loadSettings, onSettingsChange } from './settings'
 import { matchRegex, pageType } from '../common/constants'
-import { loadAnalytics } from './analytics'
 import * as std from './calculators/standard'
 import * as taiko from './calculators/taiko'
 import * as taikoReader from './objects/taiko/taikoReader'
@@ -518,10 +517,6 @@ const handleSettings = (settings: { [key: string]: any }) => {
   setLanguage(settings.language)
 
   setSongDetails(settings.metadataInOriginalLanguage)
-
-  if (settings.analytics) {
-    loadAnalytics()
-  }
 }
 
 const initializeExtension = async ({
@@ -664,3 +659,6 @@ chrome.tabs.query(
     initializeExtension(tab)
   }
 )
+
+// empty array that does nothing (used in the code, but the values are unused)
+window._gaq = []
