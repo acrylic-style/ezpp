@@ -5,6 +5,8 @@ values for a beatmap without manually downloading the beatmap.
 
 [changelog](https://next.acrylicstyle.xyz/ezpp.html#ezpp_experimental)
 
+Feel free to ask in [discussion](https://github.com/acrylic-style/ezpp/discussions) if you have any questions!
+
 ## Supported modes
 
 Full support
