@@ -108,6 +108,9 @@ Chrome/Chromium: [Install from Google WebStore](https://chrome.google.com/websto
 <!-- I didn't publish on AMO -->
 <!--Firefox: [Install from addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/ezpp/)-->
 
+### WHERE IS FIREFOX???
+It doesn't work due to a poor cross-browser compatibility of Manifest V3.
+
 ## License
 
 [MIT](https://github.com/oamaok/ezpp/blob/master/LICENSE)
