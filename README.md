@@ -1,12 +1,36 @@
-# ezpp!
+# ezpp! experimental
 
-ezpp! is a browser extension that allows you to calculate pp
+ezpp! experimental is a fork of ezpp! and a browser extension that allows you to calculate pp
 values for a beatmap without manually downloading the beatmap.
 
+[changelog](https://next.acrylicstyle.xyz/ezpp.html#ezpp_experimental)
 
-## Translating
+## Supported modes
 
-All translation efforts are warmly welcome! The base English translations can be found [here](https://github.com/oamaok/ezpp/blob/master/translations/en.json). After translating the file you should also add relevant information to [this file](https://github.com/oamaok/ezpp/blob/master/translations/languages.json), where the `code` field should match with the `.json` file you created. If you are unsure on how to edit the files, feel free to [raise an issue](https://github.com/oamaok/ezpp/issues/new) or ask away in the pull request.
+Full support
+- osu!
+- osu!taiko
+
+Partial support
+
+Unsupported
+- osu!catch (ctb)
+- osu!mania
+
+
+## Contributing
+
+### Issues
+
+If you are reporting issue that also exists in ezpp! (not experimental): Please report on [oamaok/ezpp](https://github.com/oamaok/ezpp/issues).
+
+If you are reporting issue that does not exist in ezpp! and specific to experimental: Please report on [this repository](https://github.com/acrylic-style/ezpp/issues).
+
+All feature requests should be created at [oamaok/ezpp](https://github.com/oamaok/ezpp/issues) unless you're creating a feature request (that improves the existing feature) to the feature that already exists in this repository.
+
+### Pull requests
+
+All contributions to ezpp! are warmly welcome, but you should not PR on this repository if your fixes are not specific to experimental branch. (you MUST create a PR on this repository if your fix applies only for ezpp! experimental). Please create a PR on [oamaok/ezpp](https://github.com/oamaok/ezpp) and I will update the experimental branch too.
 
 ## Developing
 
@@ -57,9 +81,10 @@ Run `yarn build:all`. Two files, `ezpp-chrome.zip` and `ezpp-firefox.zip`, are g
 
 ## Installing
 
-Chrome/Chromium: [Install from Google WebStore](https://chrome.google.com/webstore/detail/ezpp/aimihpobjpagjiakhcpijibnaafdniol)
+Chrome/Chromium: [Install from Google WebStore](https://chrome.google.com/webstore/detail/iihpkkdlbfcanaaignnjcgmlhhbpoioh)
 
-Firefox: [Install from addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/ezpp/)
+<!-- I didn't publish on AMO -->
+<!--Firefox: [Install from addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/ezpp/)-->
 
 ## License
 
