@@ -17,12 +17,6 @@ const SETTINGS = [
     type: 'boolean',
     default: false,
   },
-  {
-    key: 'analytics',
-    element: document.getElementById('analytics-toggle'),
-    type: 'boolean',
-    default: !__FIREFOX__,
-  },
 ]
 
 let currentSettings: Record<string, any> = {}
