@@ -9,7 +9,7 @@ Feel free to ask in [discussion](https://github.com/acrylic-style/ezpp/discussio
 
 Please note that experimental branch will not be merged into ezpp!. A new branch will be created for a new feature and will be PR'd from that branch.
 
-## Features (specific to experimental)
+## Features (not on ezpp! yet)
 - Full taiko star rating/pp calculation (aka Full taiko support)
 - Fix original metadata display if unicode title/artist is missing
 - Fix AR calculation with HT+HR (with simpler code)
