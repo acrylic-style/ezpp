@@ -7,6 +7,8 @@ values for a beatmap without manually downloading the beatmap.
 
 Feel free to ask in [discussion](https://github.com/acrylic-style/ezpp/discussions) if you have any questions!
 
+Please note that experimental branch will not be merged into ezpp!. A new branch will be created for a new feature and will be PR'd from that branch.
+
 ## Supported modes
 
 Full support
