@@ -9,7 +9,25 @@ Feel free to ask in [discussion](https://github.com/acrylic-style/ezpp/discussio
 
 Please note that experimental branch will not be merged into ezpp!. A new branch will be created for a new feature and will be PR'd from that branch.
 
+## Features (specific to experimental)
+- Full taiko star rating/pp calculation (aka Full taiko support)
+- Fix original metadata display if unicode title/artist is missing
+- Fix AR calculation with HT+HR (with simpler code)
+- Fix some part of an artist is missing on some beatmap
+- [\[Proposal\] Collapsible pp details design](https://github.com/oamaok/ezpp/pull/119)
+- Change header color depending on the star rating
+- Make it work on score details page
+  - With auto-fills.
+- Fix throwing error on discussion page
+  - Extension popup will be hidden (you cannot open) on discussion page.
+- Add Bulgarian Translation
+- Update German Translation
+- Update Chinese Translation
+- Add Croatian Translation
+
 ## Supported modes
+
+PRs are welcome for unsupported modes. (See `Contributing > Pull requests` below)
 
 Full support
 - osu!
@@ -18,7 +36,7 @@ Full support
 Partial support
 
 Unsupported
-- osu!catch (ctb)
+- osu!catch
 - osu!mania
 
 
