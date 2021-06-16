@@ -24,6 +24,10 @@ Please note that experimental branch will not be merged into ezpp!. A new branch
 - Update German Translation
 - Update Chinese Translation
 - Add Croatian Translation
+- Apply DoubleTime when Nightcore is present on score page
+- Fixed displaying 'NaNpp' in some cases
+- ~~Manifest V3~~
+  - will be reverted to v2 due to a poor cross-browser compatibility.
 
 ## Supported modes
 
