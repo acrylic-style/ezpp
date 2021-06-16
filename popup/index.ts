@@ -142,7 +142,7 @@ const getCalculationSettings = () => {
   const maxCombo = getMaxCombo()
 
   const accuracy = Mth.clamp(
-    parseFloat(accuracyElement.value.replace(',', '.')),
+    parseFloat((accuracyElement.value || '0').replace(',', '.')),
     0,
     100
   )
