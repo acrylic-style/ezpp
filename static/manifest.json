@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ezpp! experimental",
   "description": "Calculate pp for a beatmap directly in your browser.",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "icons": {
     "48": "icon48.png",
     "128": "icon128.png"
